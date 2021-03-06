@@ -9,6 +9,7 @@ $(SHLIB): $(STATLIB)
 
 $(STATLIB):
 	cargo build --target=$(TARGET) --lib --release --manifest-path=./rust/Cargo.toml
+	cargo run --quiet --manifest-path=./rust/Cargo.toml > ../R/extendr-wrappers.R
 
 C_clean:
 	rm -Rf $(SHLIB) $(STATLIB) $(OBJECTS)
