@@ -1,21 +1,21 @@
 LIBDIR = ./rust/target/release
 STATLIB = $(LIBDIR)/libhelloextendr.a
 PKG_LIBS = -L$(LIBDIR) -lhelloextendr
-WRAPPERS_DIR = ./rust/wrappers
+
+WRAPPER_FILE = ./extendr-wrappers.R
 
 all: C_clean
 
-$(SHLIB): $(STATLIB) generate_wrappers
+$(SHLIB): $(STATLIB) $(WRAPPER_FILE)
 
 $(STATLIB):
 	cargo build --lib --release --manifest-path=./rust/Cargo.toml
 
-generate_wrappers: $(STATLIB)
-	mkdir -p $(WRAPPERS_DIR)
-	cargo run --quiet --manifest-path=./rust/Cargo.toml --bin generate_wrappers > $(WRAPPERS_DIR)/extendr-wrappers.R
+$(WRAPPER_FILE): $(STATLIB)
+	cargo run --quiet --manifest-path=./rust/Cargo.toml --bin generate_wrappers > $@
 
 C_clean:
-	rm -Rf $(SHLIB) $(STATLIB) $(OBJECTS)
+	rm -Rf $(SHLIB) $(STATLIB) $(OBJECTS) $(WRAPPER_FILE)
 
 clean:
-	rm -Rf $(SHLIB) $(STATLIB) $(OBJECTS) rust/target
+	rm -Rf $(SHLIB) $(STATLIB) $(OBJECTS) $(WRAPPER_FILE) rust/target
