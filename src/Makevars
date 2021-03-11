@@ -10,7 +10,7 @@ $(SHLIB): $(STATLIB) generate_wrappers
 $(STATLIB):
 	cargo build --lib --release --manifest-path=./rust/Cargo.toml
 
-generate_wrappers: $(STATLIB)
+generate_wrappers:
 	mkdir -p $(WRAPPERS_DIR)
 	cargo run --quiet --manifest-path=./rust/Cargo.toml --bin generate_wrappers > $(WRAPPERS_DIR)/extendr-wrappers.R
 
