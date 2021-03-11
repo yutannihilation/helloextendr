@@ -13,7 +13,7 @@ $(STATLIB):
 
 generate_wrappers: $(STATLIB)
 	mkdir -p $(WRAPPERS_DIR)
-	cargo run --quiet --manifest-path=./rust/Cargo.toml > $(WRAPPERS_DIR)/extendr-wrappers.R
+	cargo run --quiet --manifest-path=./rust/Cargo.toml --bin generate_wrappers > $(WRAPPERS_DIR)/extendr-wrappers.R
 
 C_clean:
 	rm -Rf $(SHLIB) $(STATLIB) $(OBJECTS)
